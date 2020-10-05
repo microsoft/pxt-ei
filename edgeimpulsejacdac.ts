@@ -1,9 +1,9 @@
 namespace jacdac {
-    export class ML4FHost extends MLHost {
-        model: ml4f.Model
+    export class EIHost extends MLHost {
+        model: edgeimpulse.Model
 
         constructor(agg: SensorAggregatorHost) {
-            super("ml4f", ModelRunnerModelFormat.ML4F, agg);
+            super("ei", ModelRunnerModelFormat.EdgeImpulseCompiled, agg);
         }
 
         protected invokeModel() {
@@ -21,9 +21,14 @@ namespace jacdac {
             binstore.erase()
         }
 
+        protected transformFirstBlockOfModel(buf: Buffer) {
+            edgeimpulse.validateAndRewriteModelHeader(buf)
+            return buf
+        }
+
         protected loadModelImpl() {
             try {
-                this.model = new ml4f.Model(this.modelBuffer)
+                this.model = new edgeimpulse.Model(this.modelBuffer)
             } catch (e) {
                 if (typeof e == "string")
                     this.lastError = e
@@ -32,7 +37,7 @@ namespace jacdac {
         }
 
         get arenaBytes() {
-            return this.model.arenaSize
+            return 0
         }
 
         get inputShape(): number[] {
@@ -45,5 +50,5 @@ namespace jacdac {
     }
 
     //% whenUsed
-    export const ml4fHost = new ML4FHost(sensorAggregatorHost)
+    export const eiHost = new EIHost(sensorAggregatorHost)
 }
