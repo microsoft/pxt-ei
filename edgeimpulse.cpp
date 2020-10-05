@@ -1,6 +1,7 @@
 #include "pxt.h"
 
 #define PXT_COMM_SIZE 1024
+#define PXT_COMM_BASE 0x20001000 // 4k in
 
 namespace edgeimpulse {
 
@@ -10,7 +11,7 @@ struct import_vectors {
     void (*abort)();
     void *(*realloc)(void *ptr, size_t sz);
     int (*vprintf)(const char *fmt, va_list ap);
-    uint32_t (*get_time_ms)();
+    int (*get_time_ms)();
     uint64_t (*get_time_us)();
     uint32_t paddingInterface[32 - 6];
 };
@@ -56,7 +57,7 @@ static void *my_realloc(void *ptr, size_t size) {
 }
 
 static int my_vprintf(const char *fmt, va_list ap) {
-    codal_vdmesg(fmt, ap);
+    codal_vdmesg(fmt, true, ap);
     return 0;
 }
 
