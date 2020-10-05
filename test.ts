@@ -9,6 +9,6 @@ control.dmesg("Hello")
 pins.A9.digitalWrite(false)
 
 jacdac.deviceNamer.start()
-jacdac.ml4fHost.start()
+jacdac.eiHost.start()
 
 jacdac.start()
