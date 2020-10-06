@@ -1,7 +1,6 @@
 #include "pxt.h"
 
 #define PXT_COMM_SIZE 2048
-#define PXT_COMM_BASE 0x20001000 // 4k in
 
 namespace edgeimpulse {
 
@@ -11,9 +10,10 @@ struct import_vectors {
     void (*abort)();
     void *(*realloc)(void *ptr, size_t sz);
     int (*vprintf)(const char *fmt, va_list ap);
-    int (*get_time_ms)();
+    uint32_t (*get_time_ms)();
     uint64_t (*get_time_us)();
-    uint32_t paddingInterface[32 - 6];
+
+    uint32_t paddingInterface[32 - 5];
 };
 
 struct interface_vectors {
@@ -30,11 +30,12 @@ struct interface_vectors {
     uint32_t num_classifier_labels;
     uint32_t has_anomaly;
     const char **labels;
+
     uint32_t paddingAttributes[32 - 6];
 
     void (*ei_init)(void *comm_data, uint32_t comm_size);
     int (*ei_classify)(const float *data, unsigned numdata, float *classification);
-    uint32_t paddingEntries[14];
+    uint32_t paddingEntries[16 - 2];
 };
 
 //%
@@ -67,7 +68,7 @@ void _updateImports(Buffer buf) {
     vectors->imports.abort = my_abort;
     vectors->imports.realloc = my_realloc;
     vectors->imports.vprintf = my_vprintf;
-    vectors->imports.get_time_ms = pxt::current_time_ms;
+    vectors->imports.get_time_ms = (uint32_t(*)())pxt::current_time_ms;
     vectors->imports.get_time_us = pxt::current_time_us;
 }
 

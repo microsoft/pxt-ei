@@ -56,7 +56,7 @@ namespace edgeimpulse {
 
         invoke(input: Buffer) {
             if (input.length != shapeSize(this.inputShape))
-                throw "ei: bad input size"
+                throw "ei: bad input size: " + input.length + " exp: " + shapeSize(this.inputShape)
             const classifications = Buffer.create(shapeSize(this.outputShape))
             const err = _invoke(this.model, input, classifications)
             if (err)
