@@ -1,6 +1,6 @@
 #include "pxt.h"
 
-#define PXT_COMM_SIZE 1024
+#define PXT_COMM_SIZE 2048
 #define PXT_COMM_BASE 0x20001000 // 4k in
 
 namespace edgeimpulse {
@@ -82,7 +82,7 @@ int _invokeModel(Buffer model, Buffer inputs, Buffer results) {
         vectors->ei_init((void *)_pxt_comm_base(), PXT_COMM_SIZE);
     }
 
-    if (results->length < vectors->num_classifier_labels * sizeof(float))
+    if (results->length < (int)(vectors->num_classifier_labels * sizeof(float)))
         my_abort();
 
     return vectors->ei_classify((float *)inputs->data, inputs->length >> 2, (float *)results->data);

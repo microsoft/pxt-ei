@@ -11,6 +11,7 @@
         "edgeimpulse.cpp",
         "edgeimpulse.ts",
         "edgeimpulsejacdac.ts",
+        "commalloc.asm",
         "ns.ts"
     ],
     "fileDependencies": {

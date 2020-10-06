@@ -1,5 +1,5 @@
 namespace edgeimpulse {
-    const PXT_COMM_SIZE = 1024
+    const PXT_COMM_SIZE = 2048
 
     //% shim=edgeimpulse::_invokeModel
     declare function _invoke(model: Buffer, inp: Buffer, res: Buffer): number;
