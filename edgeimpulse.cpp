@@ -1,6 +1,6 @@
 #include "pxt.h"
 
-#define PXT_COMM_SIZE 2048
+#define PXT_COMM_SIZE 4096
 
 namespace edgeimpulse {
 
