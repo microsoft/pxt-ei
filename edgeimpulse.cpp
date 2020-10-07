@@ -58,7 +58,7 @@ static void *my_realloc(void *ptr, size_t size) {
 }
 
 static int my_vprintf(const char *fmt, va_list ap) {
-    codal_vdmesg(fmt, true, ap);
+    codal_vdmesg(fmt, false, ap);
     return 0;
 }
 
