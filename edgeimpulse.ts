@@ -29,16 +29,6 @@ namespace edgeimpulse {
     }
 
 
-    export function shapeElements(shape: number[]) {
-        let res = 1
-        for (const s of shape) res *= s
-        return res
-    }
-
-    export function shapeSize(shape: number[]) {
-        return shapeElements(shape) << 2
-    }
-
     export class Model {
         constructor(public model: Buffer) {
         }
@@ -55,13 +45,13 @@ namespace edgeimpulse {
         }
 
         test() {
-            this.invoke(Buffer.create(shapeSize(this.inputShape)))
+            this.invoke(Buffer.create(ml.shapeSize(this.inputShape)))
         }
 
         invoke(input: Buffer) {
-            if (input.length != shapeSize(this.inputShape))
-                throw "ei: bad input size: " + input.length + " exp: " + shapeSize(this.inputShape)
-            const classifications = Buffer.create(shapeSize(this.outputShape))
+            if (input.length != ml.shapeSize(this.inputShape))
+                throw "ei: bad input size: " + input.length + " exp: " + ml.shapeSize(this.inputShape)
+            const classifications = Buffer.create(ml.shapeSize(this.outputShape))
             const err = _invoke(this.model, input, classifications)
             if (err)
                 throw "ei: invoke error " + err
