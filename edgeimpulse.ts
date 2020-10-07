@@ -54,6 +54,10 @@ namespace edgeimpulse {
             return [this.header(39)]
         }
 
+        test() {
+            this.invoke(Buffer.create(shapeSize(this.inputShape)))
+        }
+
         invoke(input: Buffer) {
             if (input.length != shapeSize(this.inputShape))
                 throw "ei: bad input size: " + input.length + " exp: " + shapeSize(this.inputShape)

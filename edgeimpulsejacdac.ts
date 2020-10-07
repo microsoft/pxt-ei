@@ -26,6 +26,12 @@ namespace jacdac {
             return buf
         }
 
+        start() {
+            super.start()
+            //if (this.model)
+            //    this.model.test()
+        }
+
         protected loadModelImpl() {
             try {
                 this.model = new edgeimpulse.Model(this.modelBuffer)
